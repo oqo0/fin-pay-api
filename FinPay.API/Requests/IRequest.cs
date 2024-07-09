@@ -1,3 +1,9 @@
-﻿namespace FinPay.API.Requests;
+﻿using System.Text.Json.Serialization;
 
-public interface IRequest { }
+namespace FinPay.API.Requests;
+
+public interface IRequest
+{
+    [JsonPropertyName("signature")]
+    public string Signature { get; set; }
+}
