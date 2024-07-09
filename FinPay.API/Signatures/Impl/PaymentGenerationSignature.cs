@@ -1,4 +1,7 @@
-﻿namespace FinPay.API.Signatures.Impl;
+﻿using System.Globalization;
+using FinPay.API.Utils;
+
+namespace FinPay.API.Signatures.Impl;
 
 public class PaymentGenerationSignature(
     int merchantId,
@@ -8,5 +11,10 @@ public class PaymentGenerationSignature(
     string merchantKey1)
     : ISignature
 {
-    public string GetParameters() => $"{merchantId}:{invoiceId}:{paymentAmount}:{paymentMethodId}:{merchantKey1}";
+    public string GetParameters() => SignatureGenerator.Get(
+        merchantId.ToString(),
+        invoiceId.ToString(),
+        paymentAmount.ToString(CultureInfo.CurrentCulture),
+        paymentMethodId,
+        merchantKey1);
 }

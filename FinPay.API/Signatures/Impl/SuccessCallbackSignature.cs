@@ -1,4 +1,6 @@
-﻿namespace FinPay.API.Signatures.Impl;
+﻿using FinPay.API.Utils;
+
+namespace FinPay.API.Signatures.Impl;
 
 public class SuccessCallbackSignature(
     string merchantKey2,
@@ -6,5 +8,8 @@ public class SuccessCallbackSignature(
     string paymentGenerationSignatureHash)
     : ISignature
 {
-    public string GetParameters() => $"{merchantKey2}:{paymentId}:{paymentGenerationSignatureHash}";
+    public string GetParameters() => SignatureGenerator.Get(
+        merchantKey2,
+        paymentId.ToString(),
+        paymentGenerationSignatureHash);
 }
