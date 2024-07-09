@@ -3,7 +3,7 @@ using FinPay.API.Utils;
 
 namespace FinPay.API.Signatures.Impl;
 
-public class PaymentGenerationSignature(
+public class PaymentCreationSignature(
     int merchantId,
     int invoiceId,
     decimal paymentAmount,
