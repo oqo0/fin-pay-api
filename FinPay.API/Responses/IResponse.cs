@@ -8,5 +8,5 @@ public interface IResponse
     public bool Success { get; set; }
     
     [JsonPropertyName("code")]
-    public string ErrorCode { get; set; }
+    public string? ErrorCode { get; set; }
 }

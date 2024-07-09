@@ -2,7 +2,7 @@
 
 namespace FinPay.API.Responses.Impl;
 
-public class CreatePaymentResponse
+public class CreatePaymentResponse : IResponse
 {
     [JsonPropertyName("url")]
     public required string Url { get; set; }
@@ -17,4 +17,7 @@ public class CreatePaymentResponse
     
     [JsonPropertyName("pay_id")]
     public required string PayId { get; set; }
+
+    public bool Success { get; set; }
+    public string? ErrorCode { get; set; }
 }
