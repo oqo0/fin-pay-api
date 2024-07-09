@@ -6,7 +6,7 @@ namespace FinPay.API.Signatures.Impl;
 public class PaymentCreationSignature(
     int merchantId,
     int invoiceId,
-    decimal paymentAmount,
+    int paymentAmount,
     string paymentMethodId,
     string merchantKey1)
     : ISignature
