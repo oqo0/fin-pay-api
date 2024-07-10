@@ -26,5 +26,5 @@ public class CreatePaymentRequest : IRequest
     public required string Currency { get; set; }
 
     [JsonPropertyName("signature")]
-    public required string Signature { get; set; }
+    public string Signature { get; set; }
 }

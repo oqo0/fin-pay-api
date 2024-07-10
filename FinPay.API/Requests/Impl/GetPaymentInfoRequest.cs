@@ -2,5 +2,5 @@
 
 public class GetPaymentInfoRequest : IRequest
 {
-    public required string Signature { get; set; }
+    public string Signature { get; set; }
 }
