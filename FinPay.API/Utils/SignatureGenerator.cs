@@ -1,8 +1,6 @@
-﻿using System.Text;
+﻿namespace FinPay.API.Utils;
 
-namespace FinPay.API.Utils;
-
-public static class SignatureGenerator
+internal static class SignatureGenerator
 {
     public static string Get(params string[] signatureItems)
     {

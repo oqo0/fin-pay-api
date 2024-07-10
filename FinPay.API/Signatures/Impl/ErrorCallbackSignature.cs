@@ -2,7 +2,7 @@
 
 namespace FinPay.API.Signatures.Impl;
 
-public class ErrorCallbackSignature(
+internal class ErrorCallbackSignature(
     string merchantKey2,
     int paymentId,
     string paymentGenerationSignatureHash)

@@ -1,6 +1,6 @@
 ﻿namespace FinPay.API.Signatures.HashGenerators.Impl;
 
-public class Md5HashGenerator : IHashGenerator
+internal class Md5HashGenerator : IHashGenerator
 {
     public string GetHash(string value)
     {
