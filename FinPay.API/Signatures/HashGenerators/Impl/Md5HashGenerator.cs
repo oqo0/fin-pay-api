@@ -6,6 +6,6 @@ internal class Md5HashGenerator : IHashGenerator
     {
         var inputBytes = System.Text.Encoding.ASCII.GetBytes(value);
         var hashBytes = System.Security.Cryptography.MD5.HashData(inputBytes);
-        return Convert.ToHexString(hashBytes);
+        return Convert.ToHexString(hashBytes).ToLower();
     }
 }
