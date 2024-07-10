@@ -40,4 +40,18 @@ public class FinPayApiClient(int shopId, string key1, string key2) : ApiClient(A
         return await SendRequestAsync<CancelPaymentResponse>(
             HttpMethod.Delete, "", request, paymentCreationSignature);
     }
+    
+    public async Task<CancelPaymentResponse> GetPaymentAsync(int invoiceId, int amount, string paymentMethod)
+    {
+        var request = new GetPaymentInfoRequest();
+        var paymentCreationSignature = new PaymentSignature(
+            shopId,
+            invoiceId,
+            amount,
+            paymentMethod,
+            key1);
+
+        return await SendRequestAsync<CancelPaymentResponse>(
+            HttpMethod.Get, $"/{invoiceId}", request, paymentCreationSignature);
+    }
 }
