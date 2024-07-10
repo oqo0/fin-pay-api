@@ -16,15 +16,14 @@ public class FinPayApiClient(int shopId, string key1, string key2) : ApiClient(A
 
     public async Task<CreatePaymentResponse> CreatePaymentAsync(CreatePaymentRequest request)
     {
+        var paymentCreationSignature = new PaymentCreationSignature(
+            shopId,
+            request.InvoiceId,
+            request.Amount,
+            request.PaymentMethod,
+            key1);
+
         return await SendRequestAsync<CreatePaymentResponse>(
-            request, 
-            "", 
-            new PaymentCreationSignature(
-                shopId,
-                request.InvoiceId,
-                request.Amount,
-                request.PaymentMethod,
-                key1),
-            HttpMethod.Post);
+            HttpMethod.Post, "", request, paymentCreationSignature);
     }
 }

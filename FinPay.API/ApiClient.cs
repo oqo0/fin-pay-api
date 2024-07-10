@@ -19,10 +19,10 @@ public abstract class ApiClient(string apiUrl)
     };
     
     protected async Task<T> SendRequestAsync<T>(
-        IRequest request, string apiUrlPath, ISignature signature, HttpMethod httpMethod)
+        HttpMethod httpMethod, string apiUrlPath, IRequest request, ISignature authSignature)
         where T : IResponse
     {
-        Authorize(request, signature);
+        Authorize(request, authSignature);
         
         var responseString = await Queue(request, apiUrlPath, httpMethod);
         var responseObject = JsonSerializer.Deserialize<T>(responseString);
