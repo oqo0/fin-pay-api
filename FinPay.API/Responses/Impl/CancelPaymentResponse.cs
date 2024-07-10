@@ -2,7 +2,7 @@
 
 public class CancelPaymentResponse : IResponse
 {
-    public required int DeletedPaymentId { get; set; }
+    public int DeletedPaymentId { get; set; }
     public bool Success { get; set; }
     public string? ErrorCode { get; set; }
 }
