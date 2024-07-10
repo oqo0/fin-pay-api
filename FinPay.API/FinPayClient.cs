@@ -27,7 +27,8 @@ public class FinPayApiClient(int shopId, string key1, string key2) : ApiClient(A
             HttpMethod.Post, "", request, paymentCreationSignature);
     }
 
-    public async Task<CancelPaymentResponse> CancelPaymentAsync(CancelPaymentRequest request, int invoiceId, int amount, string paymentMethod)
+    public async Task<CancelPaymentResponse> CancelPaymentAsync(
+        CancelPaymentRequest request, int invoiceId, int amount, string paymentMethod)
     {
         var paymentCreationSignature = new PaymentSignature(
             shopId,
