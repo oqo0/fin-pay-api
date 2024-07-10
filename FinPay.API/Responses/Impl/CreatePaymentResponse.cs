@@ -18,6 +18,6 @@ public class CreatePaymentResponse : IResponse
     [JsonPropertyName("pay_id")]
     public string PayId { get; set; }
 
-    public bool Success { get; set; }
+    public bool Success { get; set; } = true;
     public string? ErrorCode { get; set; }
 }

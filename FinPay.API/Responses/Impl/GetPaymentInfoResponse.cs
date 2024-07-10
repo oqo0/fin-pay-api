@@ -40,6 +40,6 @@ public class GetPaymentInfoResponse : IResponse
     [JsonPropertyName("created_at")]
     public DateTime CreatedAt { get; set; }
     
-    public bool Success { get; set; }
+    public bool Success { get; set; } = true;
     public string? ErrorCode { get; set; }
 }
