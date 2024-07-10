@@ -2,7 +2,7 @@
 
 namespace FinPay.API.Requests.Impl;
 
-public class CancelPaymentRequest
+public class CancelPaymentRequest : IRequest
 {
     [JsonPropertyName("id")]
     public required int PaymentId { get; set; }
