@@ -5,7 +5,7 @@ namespace FinPay.API.Requests.Impl;
 public class CreatePaymentRequest : IRequest
 {
     [JsonPropertyName("shop_id")]
-    public required int ShopId { get; set; }
+    public int ShopId { get; set; }
     
     [JsonPropertyName("invoice_id")]
     public required int InvoiceId { get; set; }
