@@ -1,4 +1,4 @@
-﻿using System.Net.Http.Headers;
+﻿using System.Text;
 using System.Text.Json;
 using FinPay.API.Exceptions;
 using FinPay.API.Requests;
@@ -8,10 +8,14 @@ using FinPay.API.Signatures.HashGenerators.Impl;
 
 namespace FinPay.API;
 
-public abstract class ApiClient(string apiUrl)
+public abstract class ApiClient(string apiUrl) : IDisposable
 {
-    private readonly HttpClient _httpClient = new();
-    private readonly SignatureHashGenerator _signatureHashGenerator = new(new Md5HashGenerator());
+    private readonly HttpClient _httpClient = new()
+    {
+        BaseAddress = new Uri(apiUrl)
+    };
+    private readonly SignatureHashGenerator _signatureHashGenerator = new(
+        new Md5HashGenerator());
     private readonly JsonSerializerOptions _jsonSerializerOptions = new()
     {
         Converters = { new RequestConverter() },
@@ -23,12 +27,12 @@ public abstract class ApiClient(string apiUrl)
         where T : IResponse
     {
         Authorize(request, authSignature);
-        
-        var responseString = await Queue(request, apiUrlPath, httpMethod);
-        var responseObject = JsonSerializer.Deserialize<T>(responseString);
+
+        var responseString = await QueueAsync(request, apiUrlPath, httpMethod).ConfigureAwait(false);
+        var responseObject = JsonSerializer.Deserialize<T>(responseString, _jsonSerializerOptions);
 
         HandleResponseError(responseObject);
-        
+
         return responseObject!;
     }
 
@@ -37,19 +41,19 @@ public abstract class ApiClient(string apiUrl)
         request.Signature = _signatureHashGenerator.Get(signature);
     }
     
-    private async Task<string> Queue(IRequest request, string apiUrlPath, HttpMethod httpMethod)
+    private async Task<string> QueueAsync(IRequest request, string apiUrlPath, HttpMethod httpMethod)
     {
         var messageContentJson = JsonSerializer.Serialize(request, _jsonSerializerOptions);
-        var message = new StringContent(messageContentJson);
-        message.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+        var message = new StringContent(messageContentJson, Encoding.UTF8, "application/json");
+        var httpRequestMessage = new HttpRequestMessage(httpMethod, apiUrlPath)
+        {
+            Content = message
+        };
         
-        var httpRequestMessage = new HttpRequestMessage(httpMethod, apiUrl + apiUrlPath);
-        httpRequestMessage.Content = message;
+        var httpResponseMessage = await _httpClient.SendAsync(httpRequestMessage).ConfigureAwait(false);
+        httpResponseMessage.EnsureSuccessStatusCode();
         
-        var httpResponseMessage = await _httpClient.SendAsync(httpRequestMessage);
-        string responseAsString = await httpResponseMessage.Content.ReadAsStringAsync();
-        
-        return responseAsString;
+        return await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
     }
 
     private static void HandleResponseError(IResponse? response)
@@ -58,5 +62,10 @@ public abstract class ApiClient(string apiUrl)
             throw new FinPayException("Не удалось обработать ответ.");
         if (!response.Success)
             throw new FinPayException(response.ErrorCode);
+    }
+
+    public void Dispose()
+    {
+        _httpClient.Dispose();
     }
 }
