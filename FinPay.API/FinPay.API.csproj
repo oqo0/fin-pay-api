@@ -6,7 +6,7 @@
         <Nullable>enable</Nullable>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageId>FinPay.Checkout</PackageId>
-        <Version>1.0.0</Version>
+        <Version>1.0.1</Version>
         <RepositoryUrl>https://github.com/oqo0/fin-pay-api</RepositoryUrl>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
     </PropertyGroup>
