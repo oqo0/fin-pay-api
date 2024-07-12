@@ -2,7 +2,7 @@
 
 namespace FinPay.API.Signatures;
 
-internal class SignatureHashGenerator(IHashGenerator hashGenerator)
+public class SignatureHashGenerator(IHashGenerator hashGenerator)
 {
     public string Get(ISignature signature)
     {
